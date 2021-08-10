@@ -1,15 +1,15 @@
-package com.small.DiceGame;
+package com.small.dicegame;
 
 import static java.util.Arrays.setAll;
 import static java.util.Arrays.stream;
 
 public class Hand {
-    public boolean[] holds;
+    private final Boolean[] holds;
     private final Die[] dice = new Die[6];
 
     Hand() {
         setAll(dice, index -> new Die());
-        holds = new boolean[]{false, false, false, false, false, false};
+        holds = new Boolean[]{false, false, false, false, false, false};
     }
 
     public int[] getValues() {
@@ -20,7 +20,7 @@ public class Hand {
 
     public void roll() {
         for (int index = 0; index < holds.length; ++index) {
-            if (!holds[index]) {
+            if (Boolean.FALSE.equals(holds[index])) {
                 dice[index].roll();
             }
         }
@@ -38,9 +38,13 @@ public class Hand {
         }
     }
 
-    public int score() {
+    public int getScore() {
         return stream(dice).mapToInt(Die::getValue).filter(e -> e == 2 || e == 4).distinct().count() == 2 ?
                 stream(dice).mapToInt(Die::getValue).sum() - 6 :
                 0;
+    }
+
+    public Boolean[] getHolds() {
+        return holds;
     }
 }

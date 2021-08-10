@@ -1,4 +1,4 @@
-package com.small.DiceGame;
+package com.small.dicegame;
 
 import java.util.Random;
 
@@ -18,10 +18,6 @@ public class Die {
         value = initValue;
     }
 
-    @Override
-    public String toString() {
-        return String.valueOf(value);
-    }
 
     public void roll() {
         value = rnd.nextInt(numSides) + 1;
