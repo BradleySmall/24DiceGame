@@ -56,10 +56,10 @@ class DiceGameTest {
     void showHeldRoll() {
         Hand hand = new Hand();
         System.out.println(Arrays.toString(hand.getValues()));
-        hand.hold(1, 2, 3, 4, 5, 6);
+        hand.hold(0, 1, 2, 3, 4, 5);
         hand.roll();
         System.out.println(Arrays.toString(hand.getValues()));
-        hand.unhold(1, 2, 3, 4, 5, 6);
+        hand.unhold(0, 1, 2, 3, 4, 5);
         hand.roll();
         System.out.println(Arrays.toString(hand.getValues()));
         assertTrue(true);
@@ -93,17 +93,17 @@ class DiceGameTest {
     void shouldSetHolds() {
         DiceGame game = new DiceGame();
         game.roll();
-        game.setHolds(1, 3, 5);
+        game.setHolds(0, 2, 4);
         assertArrayEquals(new Boolean[]{true, false, true, false, true, false}, game.getHolds());
         assertNull(game.getScore());
         game.newGame();
         game.roll();
-        game.setHolds(2, 4, 6);
+        game.setHolds(1, 3, 5);
         assertArrayEquals(new Boolean[]{false, true, false, true, false, true}, game.getHolds());
         assertNull(game.getScore());
         game.newGame();
         game.roll();
-        game.setHolds(1, 2, 3, 4, 5, 6);
+        game.setHolds(0, 1, 2, 3, 4, 5);
         assertArrayEquals(new Boolean[]{true, true, true, true, true, true}, game.getHolds());
         assertNotNull(game.getScore());
     }
@@ -124,7 +124,7 @@ class DiceGameTest {
         System.out.println(Arrays.toString(game.getValues()));
         System.out.println(game.getScore());
 
-        game.setHolds(1,2,3,4,5,6);
+        game.setHolds(0,1,2,3,4,5);
         System.out.println(Arrays.toString(game.getHolds()));
         System.out.println(Arrays.toString(game.getValues()));
         System.out.println(game.getScore());

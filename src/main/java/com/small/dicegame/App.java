@@ -3,23 +3,18 @@ package com.small.dicegame;
 import javax.swing.*;
 import java.awt.*;
 import java.util.Arrays;
+import java.util.stream.IntStream;
 
 public class App extends JFrame {
-    DiePanel[] diePanels = new DiePanel[6];
-    JButton[] holdButtons = new JButton[6];
-    JButton rollButton = new JButton("Roll");
-    JButton newGameButton = new JButton("New Game");
-    JTextArea scoreText = new JTextArea();
+    public static final int NUMBER_OF_DICE = 6;
+    private final DiePanel[] diePanels = new DiePanel[NUMBER_OF_DICE];
+    private final JButton[] holdButtons = new JButton[NUMBER_OF_DICE];
+    private final JButton rollButton = new JButton("Roll");
+    private final JButton newGameButton = new JButton("New Game");
+    private final JTextArea scoreText = new JTextArea();
+    private final transient DiceGame game = new DiceGame();
     App() {
         initGui();
-    }
-
-    public static void main(String[] args) {
-        new App();
-    }
-
-    private boolean areAllHeld() {
-        return Arrays.stream(holdButtons).noneMatch(JButton::isEnabled);
     }
 
     private void initGui() {
@@ -29,30 +24,31 @@ public class App extends JFrame {
         JPanel panel = new JPanel();
         panel.setLayout(new BoxLayout(panel, BoxLayout.LINE_AXIS));
 
-        for (int i = 0; i < 6; ++i) {
-            diePanels[i] = new DiePanel();
-            diePanels[i].setLayout(new BoxLayout(diePanels[i], BoxLayout.PAGE_AXIS));
-            diePanels[i].setCurrentValue(i + 1);
-            diePanels[i].add(Box.createRigidArea(new Dimension(0, 70)));
-            holdButtons[i] = new JButton("Hold");
-            holdButtons[i].setEnabled(false);
-            holdButtons[i].addActionListener(e -> {
-                JButton b = (JButton) e.getSource();
-                b.setEnabled(false);
+        IntStream.range(0, NUMBER_OF_DICE).forEach(index -> {
+            diePanels[index] = new DiePanel();
+            diePanels[index].setLayout(new BoxLayout(diePanels[index], BoxLayout.PAGE_AXIS));
+            diePanels[index].setCurrentValue(6);
+            diePanels[index].add(Box.createRigidArea(new Dimension(0, 70)));
+            holdButtons[index] = new JButton("Hold");
+            holdButtons[index].setEnabled(false);
+            holdButtons[index].addActionListener(e -> {
+                JButton holdButton = (JButton) e.getSource();
+                holdButton.setEnabled(false);
+                hold(getHoldButtonIndex(holdButton));
                 if (areAllHeld()) {
                     newGameButton.setEnabled(true);
                     rollButton.setEnabled(false);
-                    int score = 17;
-                    scoreText.setText("Your score = " + score);
+
+                    scoreText.setText("Your score = " + score());
                     scoreText.setEnabled(true);
                     scoreText.setVisible(true);
                 } else {
                     rollButton.setEnabled(true);
                 }
             });
-            diePanels[i].add(holdButtons[i]);
-            panel.add(diePanels[i]);
-        }
+            diePanels[index].add(holdButtons[index]);
+            panel.add(diePanels[index]);
+        });
 
         add(panel);
 
@@ -64,6 +60,7 @@ public class App extends JFrame {
                 for (JButton b : holdButtons) b.setEnabled(true);
             }
             rollButton.setEnabled(false);
+            updateDiePanelValues(roll());
         });
         buttonPanel.add(rollButton);
 
@@ -73,6 +70,7 @@ public class App extends JFrame {
             rollButton.setEnabled(true);
             scoreText.setEnabled(false);
             scoreText.setVisible(false);
+            newGame();
         });
 
         add(buttonPanel);
@@ -83,5 +81,45 @@ public class App extends JFrame {
         setSize(500, 300);
         setLocationRelativeTo(null);
         setVisible(true);
+    }
+
+    private boolean areAllHeld() {
+        return Arrays.stream(holdButtons).noneMatch(JButton::isEnabled);
+    }
+
+    private void updateDiePanelValues(int [] values) {
+        for (int index = 0; index < NUMBER_OF_DICE ; ++index) {
+            diePanels[index].setCurrentValue(values[index]);
+        }
+    }
+
+    private int getHoldButtonIndex (JButton b) {
+        for (int holdIndex = 0; holdIndex < NUMBER_OF_DICE; ++holdIndex) {
+            if (b == holdButtons[holdIndex]) {
+                return holdIndex;
+            }
+        }
+        return -1;
+    }
+
+    private void newGame() {
+        game.newGame();
+    }
+
+    private int score() {
+        return game.getScore();
+    }
+
+    private void hold(int holdIndex) {
+        game.setHolds(holdIndex);
+    }
+
+    private int[] roll() {
+        game.roll();
+        return game.getValues();
+    }
+
+    public static void main(String[] args) {
+        new App();
     }
 }

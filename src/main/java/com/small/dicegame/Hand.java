@@ -28,13 +28,13 @@ public class Hand {
 
     public void unhold(int... held) {
         for (int index : held) {
-            holds[index - 1] = false;
+            holds[index] = false;
         }
     }
 
     public void hold(int... held) {
         for (int index : held) {
-            holds[index - 1] = true;
+            holds[index] = true;
         }
     }
 
