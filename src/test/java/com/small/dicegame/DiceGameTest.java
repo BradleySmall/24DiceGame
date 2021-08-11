@@ -59,7 +59,7 @@ class DiceGameTest {
         hand.hold(0, 1, 2, 3, 4, 5);
         hand.roll();
         System.out.println(Arrays.toString(hand.getValues()));
-        hand.unhold(0, 1, 2, 3, 4, 5);
+        hand.unHold(0, 1, 2, 3, 4, 5);
         hand.roll();
         System.out.println(Arrays.toString(hand.getValues()));
         assertTrue(true);

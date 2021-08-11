@@ -3,7 +3,7 @@ package com.small.dicegame;
 import java.util.Random;
 
 public class Die {
-    private int numSides;
+    private final int numSides;
     private int value;
     public static final Random rnd = new Random();
 

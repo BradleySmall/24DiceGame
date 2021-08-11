@@ -26,7 +26,7 @@ public class Hand {
         }
     }
 
-    public void unhold(int... held) {
+    public void unHold(int... held) {
         for (int index : held) {
             holds[index] = false;
         }
