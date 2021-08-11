@@ -1,3 +1,8 @@
+/*
+ * Copyright (c) 2021. Bradley M. Small
+ * All rights reserved.
+ */
+
 package com.small.dicegame;
 
 import java.util.Random;
