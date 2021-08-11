@@ -5,15 +5,17 @@
 
 package com.small.dicegame;
 
-import org.junit.jupiter.api.Test;
+
+import org.junit.Test;
 
 import java.util.Arrays;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.Assert.*;
 
-class DiceGameTest {
+
+public class DiceGameTest {
     @Test
-    void shouldShowValForVal() {
+    public void shouldShowValForVal() {
         assertEquals(1, new Die(6, 1).getValue());
         assertEquals(2, new Die(6, 2).getValue());
         assertEquals(3, new Die(6, 3).getValue());
@@ -23,33 +25,33 @@ class DiceGameTest {
     }
 
     @Test
-    void shouldShow6ForDefault() {
+    public void shouldShow6ForDefault() {
         assertEquals(6, new Die().getValue());
     }
 
     @Test
-    void shouldShow8For8SidedWithoutInitialValue() {
+    public void shouldShow8For8SidedWithoutInitialValue() {
         assertEquals(8, new Die(8).getValue());
     }
 
     @Test
-    void shouldShowValueBetween1and6() {
+    public void shouldShowValueBetween1and6() {
         Die die = new Die();
 
         for (int i = 0; i < 100; ++i) {
             die.roll();
-            assertTrue(1 <= die.getValue(), "Too Low");
-            assertTrue(6 >= die.getValue(), "Too High");
+            assertTrue("Too Low", 1 <= die.getValue());
+            assertTrue("Too High", 6 >= die.getValue());
         }
     }
 
     @Test
-    void shouldShow_666666_ForHand_6() {
+    public void shouldShow_666666_ForHand_6() {
         assertArrayEquals(new int[]{6, 6, 6, 6, 6, 6}, new Hand().getValues());
     }
 
     @Test
-    void showHandRoll() {
+    public void showHandRoll() {
         Hand hand = new Hand();
         System.out.println(Arrays.toString(hand.getValues()));
         hand.roll();
@@ -58,7 +60,7 @@ class DiceGameTest {
     }
 
     @Test
-    void showHeldRoll() {
+    public void showHeldRoll() {
         Hand hand = new Hand();
         System.out.println(Arrays.toString(hand.getValues()));
         hand.hold(0, 1, 2, 3, 4, 5);
@@ -71,7 +73,7 @@ class DiceGameTest {
     }
 
     @Test
-    void showScoring() {
+    public void showScoring() {
         Hand hand = new Hand();
         hand.roll();
         System.out.println(Arrays.toString(hand.getValues()));
@@ -80,12 +82,13 @@ class DiceGameTest {
     }
 
     @Test
-    void shouldCreateGame() {
-        assertInstanceOf(DiceGame.class, new DiceGame());
+    public void shouldCreateGame() {
+        assertEquals("class com.small.dicegame.DiceGame", new DiceGame().getClass().toString());
+        // assertInstanceOf(DiceGame.class, new DiceGame());
     }
 
     @Test
-    void shouldCreateNewGame() {
+    public void shouldCreateNewGame() {
         DiceGame game = new DiceGame();
         game.newGame();
         assertNull(game.getScore());
@@ -95,7 +98,7 @@ class DiceGameTest {
     }
 
     @Test
-    void shouldSetHolds() {
+    public void shouldSetHolds() {
         DiceGame game = new DiceGame();
         game.roll();
         game.setHolds(0, 2, 4);
@@ -113,7 +116,7 @@ class DiceGameTest {
         assertNotNull(game.getScore());
     }
     @Test
-    void shouldPlay() {
+    public void shouldPlay() {
         DiceGame game = new DiceGame();
         System.out.println(Arrays.toString(game.getHolds()));
         System.out.println(Arrays.toString(game.getValues()));
