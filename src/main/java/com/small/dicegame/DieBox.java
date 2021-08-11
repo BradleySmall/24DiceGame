@@ -7,14 +7,33 @@ package com.small.dicegame;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionListener;
 
-public class DiePanel extends JPanel {
-    private int currentValue = 0;
+public class DieBox extends Box {
+    private final int index;
+    private int currentValue = 6;
+    private JButton holdButton = new JButton("Hold");
 
-    DiePanel() {
-        super();
+    public DieBox(int index) {
+        super(BoxLayout.PAGE_AXIS);
+        add(Box.createRigidArea(new Dimension(0, 70)));
+        add(holdButton);
+        holdButton.setEnabled(false);
+        this.index = index;
     }
 
+
+    public void setButtonEnabled(boolean setValue) {
+        holdButton.setEnabled(setValue);
+    }
+
+    public boolean isButtonEnabled() {
+        return holdButton.isEnabled();
+    }
+
+    public void addActionListener(ActionListener e) {
+        holdButton.addActionListener(e);
+    }
     @Override
     protected void paintComponent(Graphics g) {
 
@@ -67,5 +86,9 @@ public class DiePanel extends JPanel {
     public void setCurrentValue(int currentValue) {
         this.currentValue = currentValue;
         repaint();
+    }
+
+    public int getIndex() {
+        return index;
     }
 }
