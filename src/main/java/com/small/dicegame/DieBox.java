@@ -34,10 +34,15 @@ public class DieBox extends Box {
     public void addActionListener(ActionListener e) {
         holdButton.addActionListener(e);
     }
+
     @Override
     protected void paintComponent(Graphics g) {
-
         super.paintComponent(g);
+
+        drawDie(g);
+    }
+
+    private void drawDie(Graphics g) {
         g.setColor(Color.white);
         g.fillRoundRect(0, 0, 60, 60, 30, 30);
         g.setColor(Color.black);
