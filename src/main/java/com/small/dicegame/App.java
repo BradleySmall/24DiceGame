@@ -26,7 +26,7 @@ public class App extends JFrame {
         setLayout(new BoxLayout(getContentPane(), BoxLayout.PAGE_AXIS));
 
         Box diceBox = Box.createHorizontalBox();
-        for (int index = 0, dieBoxesLength = dieBoxes.length; index < dieBoxesLength; index++) {
+        for (int index = 0; index < NUMBER_OF_DICE; index++) {
             dieBoxes[index] = new DieBox(index);
             dieBoxes[index].addActionListener(e -> {
                 JButton holdButton = (JButton) e.getSource();

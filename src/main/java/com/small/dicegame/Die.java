@@ -10,7 +10,7 @@ import java.util.Random;
 public class Die {
     private final int numSides;
     private int value;
-    public static final Random rnd = new Random();
+    private static final Random rnd = new Random();
 
     public Die() {
         this(6, 6);
