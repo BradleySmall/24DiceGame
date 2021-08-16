@@ -8,16 +8,18 @@ package com.small.dicegame;
 import java.util.Random;
 
 public class Die {
+    private static final Random rnd = new Random();
     private final int numSides;
     private int value;
-    private static final Random rnd = new Random();
 
     public Die() {
         this(6, 6);
     }
+
     public Die(int sides) {
         this(sides, sides);
     }
+
     public Die(int sides, int initValue) {
         numSides = sides;
         value = initValue;

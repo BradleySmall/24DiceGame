@@ -11,8 +11,8 @@ import java.awt.event.ActionListener;
 
 public class DieBox extends Box {
     private final int index;
-    private int currentValue = 6;
     private final JButton holdButton = new JButton("Hold");
+    private int currentValue = 6;
 
     public DieBox(int index) {
         super(BoxLayout.PAGE_AXIS);
@@ -22,13 +22,12 @@ public class DieBox extends Box {
         this.index = index;
     }
 
+    public boolean isButtonEnabled() {
+        return holdButton.isEnabled();
+    }
 
     public void setButtonEnabled(boolean setValue) {
         holdButton.setEnabled(setValue);
-    }
-
-    public boolean isButtonEnabled() {
-        return holdButton.isEnabled();
     }
 
     public void addActionListener(ActionListener e) {

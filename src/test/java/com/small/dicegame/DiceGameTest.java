@@ -115,6 +115,7 @@ public class DiceGameTest {
         assertArrayEquals(new Boolean[]{true, true, true, true, true, true}, game.getHolds());
         assertNotNull(game.getScore());
     }
+
     @Test
     public void shouldPlay() {
         DiceGame game = new DiceGame();
@@ -132,7 +133,7 @@ public class DiceGameTest {
         System.out.println(Arrays.toString(game.getValues()));
         System.out.println(game.getScore());
 
-        game.setHolds(0,1,2,3,4,5);
+        game.setHolds(0, 1, 2, 3, 4, 5);
         System.out.println(Arrays.toString(game.getHolds()));
         System.out.println(Arrays.toString(game.getValues()));
         System.out.println(game.getScore());

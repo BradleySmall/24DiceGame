@@ -9,25 +9,48 @@ import javax.swing.*;
 import java.util.Arrays;
 
 public class App extends JFrame {
-    public static final int NUMBER_OF_DICE = 6;
+    private static final int NUMBER_OF_DICE = 6;
     private final DieBox[] dieBoxes = new DieBox[NUMBER_OF_DICE];
     private final JButton rollButton = new JButton("Roll");
     private final JButton newGameButton = new JButton("New Game");
     private final JTextArea scoreText = new JTextArea();
+    private final Box diceBox = Box.createHorizontalBox();
+    private final JPanel buttonPanel = new JPanel();
+
     private final transient DiceGame game = new DiceGame();
 
     App() {
         initGui();
     }
 
-    //TODO Try to keep initialization methods reasonably short, could move construction parts to additional methods
+    public static void main(String[] args) {
+        new App();
+    }
+
     private void initGui() {
         setTitle("24 Dice Game");
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setLayout(new BoxLayout(getContentPane(), BoxLayout.PAGE_AXIS));
 
-        Box diceBox = Box.createHorizontalBox();
-        //TODO Could move to separate method: buildBoxDiceGUI(diceBox)
+        buildDiceBoxGUI();
+        add(diceBox);
+
+        initRollButton();
+        initGameNewButton();
+        buttonPanel.add(rollButton);
+        buttonPanel.add(newGameButton);
+        add(buttonPanel);
+
+        initScoreText();
+        add(scoreText);
+
+        pack();
+        setSize(500, 300);
+        setLocationRelativeTo(null);
+        setVisible(true);
+    }
+
+    private void buildDiceBoxGUI() {
         for (int index = 0; index < NUMBER_OF_DICE; index++) {
             dieBoxes[index] = new DieBox(index);
             dieBoxes[index].addActionListener(e -> {
@@ -40,22 +63,25 @@ public class App extends JFrame {
             });
             diceBox.add(dieBoxes[index]);
         }
-        add(diceBox);
+    }
 
-        JPanel buttonPanel = new JPanel();
-        //TODO Could move to separate method: initRollButton()
+    private void initScoreText() {
+        scoreText.setText("Score = 0");
+        scoreText.setEnabled(false);
+    }
+
+    private void initRollButton() {
         rollButton.setEnabled(false);
         rollButton.addActionListener(e -> {
-            if (areAllHeld()) {
+            if (isAllHeld()) {
                 for (DieBox d : dieBoxes) d.setButtonEnabled(true);
             }
             rollButton.setEnabled(false);
             updateDiePanelValues(roll());
         });
-        buttonPanel.add(rollButton);
+    }
 
-        buttonPanel.add(newGameButton);
-        //TODO Could move to separate method: initGameButton()
+    private void initGameNewButton() {
         newGameButton.addActionListener(e -> {
             newGameButton.setEnabled(false);
             rollButton.setEnabled(true);
@@ -63,20 +89,10 @@ public class App extends JFrame {
             scoreText.setVisible(false);
             newGame();
         });
-        add(buttonPanel);
-
-        scoreText.setText("Score = 0");
-        scoreText.setEnabled(false);
-        add(scoreText);
-
-        pack();
-        setSize(500, 300);
-        setLocationRelativeTo(null);
-        setVisible(true);
     }
 
     private void checkScore() {
-        if (areAllHeld()) {
+        if (isAllHeld()) {
             newGameButton.setEnabled(true);
             rollButton.setEnabled(false);
 
@@ -88,14 +104,13 @@ public class App extends JFrame {
         }
     }
 
-    //TODO Java naming style for methods that return Boolean to use prefix 'is' or 'has', example: hasHeldAllDice()
-    private boolean areAllHeld() {
+    private boolean isAllHeld() {
         return Arrays.stream(dieBoxes).noneMatch(DieBox::isButtonEnabled);
 
     }
 
-    private void updateDiePanelValues(int [] values) {
-        for (int index = 0; index < NUMBER_OF_DICE ; ++index) {
+    private void updateDiePanelValues(int[] values) {
+        for (int index = 0; index < NUMBER_OF_DICE; ++index) {
             dieBoxes[index].setCurrentValue(values[index]);
         }
     }
@@ -115,9 +130,5 @@ public class App extends JFrame {
     private int[] roll() {
         game.roll();
         return game.getValues();
-    }
-
-    public static void main(String[] args) {
-        new App();
     }
 }
