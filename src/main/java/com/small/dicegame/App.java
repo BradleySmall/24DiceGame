@@ -20,12 +20,14 @@ public class App extends JFrame {
         initGui();
     }
 
+    //TODO Try to keep initialization methods reasonably short, could move construction parts to additional methods
     private void initGui() {
         setTitle("24 Dice Game");
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setLayout(new BoxLayout(getContentPane(), BoxLayout.PAGE_AXIS));
 
         Box diceBox = Box.createHorizontalBox();
+        //TODO Could move to separate method: buildBoxDiceGUI(diceBox)
         for (int index = 0; index < NUMBER_OF_DICE; index++) {
             dieBoxes[index] = new DieBox(index);
             dieBoxes[index].addActionListener(e -> {
@@ -41,6 +43,7 @@ public class App extends JFrame {
         add(diceBox);
 
         JPanel buttonPanel = new JPanel();
+        //TODO Could move to separate method: initRollButton()
         rollButton.setEnabled(false);
         rollButton.addActionListener(e -> {
             if (areAllHeld()) {
@@ -52,6 +55,7 @@ public class App extends JFrame {
         buttonPanel.add(rollButton);
 
         buttonPanel.add(newGameButton);
+        //TODO Could move to separate method: initGameButton()
         newGameButton.addActionListener(e -> {
             newGameButton.setEnabled(false);
             rollButton.setEnabled(true);
@@ -84,6 +88,7 @@ public class App extends JFrame {
         }
     }
 
+    //TODO Java naming style for methods that return Boolean to use prefix 'is' or 'has', example: hasHeldAllDice()
     private boolean areAllHeld() {
         return Arrays.stream(dieBoxes).noneMatch(DieBox::isButtonEnabled);
 
