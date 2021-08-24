@@ -82,12 +82,6 @@ public class DiceGameTest {
     }
 
     @Test
-    public void shouldCreateGame() {
-        assertEquals("class com.small.dicegame.DiceGame", new DiceGame().getClass().toString());
-        // assertInstanceOf(DiceGame.class, new DiceGame());
-    }
-
-    @Test
     public void shouldCreateNewGame() {
         DiceGame game = new DiceGame();
         game.newGame();
